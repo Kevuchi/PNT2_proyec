@@ -1,17 +1,21 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, useRouter } from 'vue-router'
+const router = useRouter()
+function goToComponentePrueba() {
+    console.log('PRueba')
+    router.push('/componente-prueba')
+}
 </script>
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <h1>Primer testeo del proyecto</h1>
+    <a @click="goToComponentePrueba"> Componente de Prueba</a>
+    <RouterLink to="/componente-prueba"> Componente de Prueba con RouterLink </RouterLink>
+    <RouterLink to="/"> Home </RouterLink>
+    <RouterView></RouterView>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  
 </template>
 
 <style scoped>
