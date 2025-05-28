@@ -13,6 +13,7 @@ function goToComponentePrueba() {
     <a @click="goToComponentePrueba"> Componente de Prueba</a>
     <RouterLink to="/componente-prueba"> Componente de Prueba con RouterLink </RouterLink>
     <RouterLink to="/"> Home </RouterLink>
+    <RouterLink to="/login"> Log in</RouterLink>
     <RouterView></RouterView>
   </div>
   
