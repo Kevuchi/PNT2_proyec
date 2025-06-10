@@ -18,7 +18,10 @@
 
 <script>
 import { ref } from "vue";
-
+//rutear de nuevo al home si el login es válido!!
+/*
+antes del ruteo guardar el usuario en el store de pinia
+*/
 export default {
   setup() {
     const username = ref("");

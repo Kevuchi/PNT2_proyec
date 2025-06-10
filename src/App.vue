@@ -2,14 +2,13 @@
 import { RouterLink, useRouter } from 'vue-router'
 const router = useRouter()
 function goToComponentePrueba() {
-    console.log('PRueba')
     router.push('/componente-prueba')
 }
 </script>
 
 <template>
   <div>
-    <h1>Primer testeo del proyecto</h1>
+    <h1>Proyecto restaurant</h1>
     <a @click="goToComponentePrueba"> Componente de Prueba</a>
     <RouterLink to="/componente-prueba"> Componente de Prueba con RouterLink </RouterLink>
     <RouterLink to="/"> Home </RouterLink>
