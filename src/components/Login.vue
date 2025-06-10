@@ -18,6 +18,8 @@
 <script setup>
 
 import {ref, onMounted} from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const usuarios = ref([]);
 const buscarEmail = ref(''); //del input
@@ -27,8 +29,8 @@ onMounted(async()=>{
     try{
         const response = await fetch('https://www.mockachino.com/eb715ed8-7002-4b/usuarios');
         const data = await response.json();
-        usuarios.value = await data.users; //filtro solo la lista de usuarios
-        console.log(usuarios);
+        usuarios.value = data.users; //filtro solo la lista de usuarios
+        //console.log(usuarios);
     } catch (error) {
         console.error('Error al cargar usuarios', error);
     }
@@ -43,7 +45,7 @@ const consultaUsuario = () => {
   );
 
   if (buscarUsuario) {
-    alert("¡Bienvenido, " + buscarUsuario.nombre + "!");
+    router.push('/');
   } else {
     alert("Usuario no encontrado o contraseña incorrecta.");
   }

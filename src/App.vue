@@ -5,10 +5,12 @@
     <nav class="navbar">
       <div class="logo" @click="irAHome"><img src="./imagenes/logo.png" alt="logo-morfar"></div>
       <div class="nav-links">
-        <router-link to="/promociones">Promociones bancarias</router-link>
+        <router-link to="/promociones">Promociones</router-link>
         <router-link to="/registra-comercio">Registra tu comercio</router-link>
-        <router-link to="/unite-repartidor">Unite como repartidor</router-link>
-        <router-link to="/login">Iniciar sesión</router-link>
+        <router-link to="/productos">Productos</router-link>
+        <router-link to="/login">
+          {{ usuarioLogueado ? usuarioLogueado.nombre : 'Iniciar sesión' }}
+        </router-link>
       </div>
     </nav>
   </div>
@@ -30,6 +32,7 @@ function irAHome() {
     console.log('se va al home')
     router.push('/')
 }
+
 
 </script>
 

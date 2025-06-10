@@ -4,17 +4,17 @@ import App from './App.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './components/Home.vue'
-import Promociones from './components/PromocionesBancarias.vue'
+import Promociones from './components/Promociones.vue'
 import RegistraTuComercio from './components/RegistraComercio.vue'
-import UniteComoRepartidor from './components/UniteComoRepartidor.vue'
 import Login from './components/Login.vue'
+import Productos from './components/Productos.vue'
 
 const routes = [
     
     { path: '/', component: Home },
     { path: '/promociones', component: Promociones },
     {path: '/registra-comercio', component: RegistraTuComercio },
-    { path: '/unite-repartidor', component: UniteComoRepartidor },
+    { path: '/productos', component: Productos },
     { path: '/login', component: Login }
     
 ]
