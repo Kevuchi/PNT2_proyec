@@ -109,7 +109,8 @@ onMounted(async () => {
 
 // Handle image load errors
 const handleImageError = (event) => {
-  event.target.src = 'https://via.placeholder.com/200x200?text=Sin+imagen';
+  //event.target.src = 'https://via.placeholder.com/200x200?text=Sin+imagen';
+  event.target.src = 'https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg'
 };
 
 // Add to cart function

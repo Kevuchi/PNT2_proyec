@@ -2,14 +2,21 @@
   <div class="login-container">
     <div class="login-box">
       <h2>Iniciar sesión</h2>
-      <form>
+      <form @submit.prevent="consultaUsuario">
         <label for="email">Correo electrónico</label>
         <input type="email" id="email" v-model="buscarEmail" required>
 
         <label for="password">Contraseña</label>
         <input type="password" id="password" v-model="verifPassword" required>
 
-        <button type="submit" @click="consultaUsuario">Ingresar</button>
+        <button type="submit">Ingresar</button>
+
+        <div class="registro-link">
+          ¿No tenés cuenta?
+          <router-link to="/registro">Registrate</router-link>
+        </div>
+
+        <span v-if="mensajeError" class="mensaje-error">{{ mensajeError }}</span>
       </form>
     </div>
   </div>
@@ -17,38 +24,43 @@
 
 <script setup>
 
-import {ref, onMounted} from 'vue';
+import {ref} from 'vue';
 import { useRouter } from 'vue-router'
+import { useUsuarioStore } from '../stores/usuarioStore';
 const router = useRouter()
+const usuarioStore = useUsuarioStore()
 
 const usuarios = ref([]);
 const buscarEmail = ref(''); //del input
 const verifPassword = ref(''); //del input
+const mensajeError = ref('');
 
-onMounted(async()=>{
-    try{
-        const response = await fetch('https://www.mockachino.com/eb715ed8-7002-4b/usuarios');
-        const data = await response.json();
-        usuarios.value = data.users; //filtro solo la lista de usuarios
-        //console.log(usuarios);
-    } catch (error) {
-        console.error('Error al cargar usuarios', error);
-    }
-});
-
-const consultaUsuario = () => {
+const consultaUsuario = async () => {
   const queryMail = buscarEmail.value.toLowerCase();
   const queryPass = verifPassword.value;
 
-  const buscarUsuario = usuarios.value.find(
-    usuario => usuario.mail.toLowerCase() === queryMail && usuario.password === queryPass
-  );
+  try {
+    const response = await fetch('https://684dea7265ed087139176cc4.mockapi.io/api/v1/usuarios');
+    usuarios.value = await response.json();
 
-  if (buscarUsuario) {
-    router.push('/');
-  } else {
-    alert("Usuario no encontrado o contraseña incorrecta.");
+    const buscarUsuario = usuarios.value.find(
+      usuario =>
+        usuario.mail.toLowerCase() === queryMail &&
+        usuario.password === queryPass
+    );
+
+    if (buscarUsuario) {
+      usuarioStore.setUser(buscarUsuario);
+      router.push('/');
+    } else {
+      mensajeError.value = 'Usuario no encontrado o contraseña incorrecta.';
+    }
+  } catch (error) {
+    console.error('Error al consultar el endpoint:', error);
+    mensajeError.value = 'Ocurrió un error al verificar el usuario.';
   }
+  buscarEmail.value = '';
+  verifPassword.value = '';
 }
 
 </script>
@@ -90,5 +102,25 @@ button {
 
 button:hover {
   background-color: #e64a19;
+}
+
+.mensaje-error {
+  color: red;
+  display: block;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.registro-link {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.registro-link a {
+  color: #ff5722;
+  margin-left: 5px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
