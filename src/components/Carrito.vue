@@ -41,7 +41,7 @@
             precioUnitario: item.precioUnitario,
             cantidad: item.cantidad,
         }))),
-        fecha: new Date().toISOString(),
+        fecha: obtenerFechaFormateada(),
         total: carrito.totalConDescuento,//si no se aplica descuento pasa el precio completo
       }
       console.log("payloaaaad",payload)
@@ -58,6 +58,19 @@
       alert('Hubo un problema al realizar la compra')
     }
   }
+
+function obtenerFechaFormateada() {
+  const fecha = new Date();
+
+  const dia = String(fecha.getDate()).padStart(2, '0');
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // ¡los meses van de 0 a 11!
+  const anio = fecha.getFullYear();
+
+  const horas = String(fecha.getHours()).padStart(2, '0');
+  const minutos = String(fecha.getMinutes()).padStart(2, '0');
+
+  return `${dia}-${mes}-${anio} ${horas}:${minutos}`;
+}
   </script>
   
   <style scoped>

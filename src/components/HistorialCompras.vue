@@ -45,6 +45,7 @@
     compras.value = res.data
     console.log(compras.value )
   })
+  
   </script>
   
   <style scoped>
