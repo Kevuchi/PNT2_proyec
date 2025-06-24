@@ -38,11 +38,11 @@
         items:JSON.stringify( carrito.items.map(item => ({
             id: item.id,
             nombre: item.nombre,
-            precioUnitario: item.precioUnita,
+            precioUnitario: item.precioUnitario,
             cantidad: item.cantidad,
         }))),
         fecha: new Date().toISOString(),
-        total: carrito.total,
+        total: carrito.totalConDescuento,
       }
       console.log("payloaaaad",payload)
       await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', payload,
