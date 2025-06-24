@@ -9,6 +9,10 @@
           <input type="text" :value="compra.fecha" readonly />
         </div>
         <div class="campo">
+          <label>Total descuento aplicado:</label>
+          <input type="text" :value="'$' + compra.totalDescuento" readonly />
+        </div>
+        <div class="campo">
           <label>Total:</label>
           <input type="text" :value="'$' + compra.total" readonly />
         </div>
@@ -45,7 +49,7 @@
     compras.value = res.data
     console.log(compras.value )
   })
-  
+
   </script>
   
   <style scoped>
