@@ -15,6 +15,7 @@
         <h3>Total: ${{ carrito.total }}</h3>
   
         <button @click="confirmarCompra"
+         :disabled="!usuario.getUser.id"
         >Confirmar compra</button>
       </div>
     </div>
