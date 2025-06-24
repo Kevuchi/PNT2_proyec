@@ -5,17 +5,25 @@
     <nav class="navbar">
       <div class="logo" @click="irAHome"><img src="./imagenes/logo.png" alt="logo-morfar"></div>
       <div class="nav-links">
+        <!--
         <router-link to="/promociones">Promociones</router-link>
+        -->
         <router-link to="/registra-comercio">Registra tu comercio</router-link>
         <router-link to="/productos">Productos</router-link>
-        <router-link to="/carrito">Carrito</router-link>
-        <router-link to="/historial">Historail de compras</router-link>
+
+        <router-link to="/carrito" class="carrito-wrapper">
+          Carrito
+          <img src="./imagenes/bolsa-de-papel.png" alt="Carrito" class="icono-carrito" />
+          <span class="contador-carrito">{{ carrito.cantidadTotal }}</span>
+        </router-link>
+
         <div class="usuario-dropdown" v-if="usuarioStore.estaLogueado">
           <span class="usuario-trigger">
             Bienvenido {{ usuarioStore.getUser.nombre }}
           </span>
           <div class="dropdown-menu">
             <a @click="hacerLogout">Cerrar sesión</a>
+            <a @click="irAHistorial">Compras realizadas</a>
           </div>
         </div>
         <router-link v-else to="/login">Iniciar sesión</router-link>
@@ -48,8 +56,10 @@
 <script setup>
 
 //para usar Pinia
-import { useUsuarioStore } from './stores/usuarioStore'
+import { useUsuarioStore } from './stores/usuarioStore';
+import { useCarritoStore } from './stores/carritoStore';
 const usuarioStore = useUsuarioStore()
+const carrito = useCarritoStore()
 
 //para el router de navegación
 import { useRouter } from 'vue-router'
@@ -64,6 +74,10 @@ function hacerLogout() {
   usuarioStore.cerrarSesion()
   console.log(usuarioStore.getUser)
   router.push('/login')
+}
+
+function irAHistorial(){
+  router.push('/historial')
 }
 
 </script>
@@ -132,7 +146,7 @@ function hacerLogout() {
   display: none;
   position: absolute;
   background-color: white;
-  min-width: 120px;
+  min-width: 150px;
   right: 0;
   top: 100%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -189,5 +203,29 @@ function hacerLogout() {
   font-size: 0.9rem;
 }
 
+/*Para carrito*/
+.carrito-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.icono-carrito {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.contador-carrito {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: white;
+  color:  crimson;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  box-shadow: 0 0 2px black;
+}
 
 </style>
