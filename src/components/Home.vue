@@ -5,7 +5,11 @@
   <div class="carousel">
     <div class="carousel-image" v-if="imagenes.length">
 
-      <img :src="imagenes[indiceActual]" alt="Publicidad"/>
+      <div class="titulo-promocion">
+      {{ imagenes[indiceActual].nombre }}
+      </div>
+
+      <img :src="imagenes[indiceActual].imagen" alt="Publicidad" @click="agregarACarrito(imagenes[indiceActual])"/>
 
       <div class="texto-promocion">
       ¡Promociones disponibles en los siguientes productos de hasta 50% descuento!
@@ -31,6 +35,16 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 
+import { useCarritoStore } from '../stores/carritoStore';
+const carrito = useCarritoStore()
+
+import { useUsuarioStore } from '../stores/usuarioStore';
+const usuarioStore = useUsuarioStore()
+
+//para el router de navegación
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const imagenes = ref([]);
 const indiceActual = ref(0);
 let intervalo = null;
@@ -41,10 +55,10 @@ async function cargarImagenes() {
     const res = await fetch('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/productos');
     const data = await res.json();
 
-    // Extraer solo el campo "imagen los links filtrando los que tiene stock >=100"
+    // Extraer solo el campo "imagen los links filtrando los que tiene stock > 100"
     imagenes.value = data
     .filter(item => item.stock > 100)
-    .map(item => item.imagen);
+    //.map(item => item.imagen);
   } catch (error) {
     console.error('Error al cargar imágenes:', error);
   }
@@ -66,9 +80,21 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(intervalo);
 });
+
+function agregarACarrito(producto){
+  if(usuarioStore.estaLogueado){
+  carrito.agregarAlCarrito(producto)
+  router.push('/carrito')
+  } else {
+    alert('¡Para aprovechar la promoción necesita estar logueado!')
+  }
+}
 </script>
 
 <style scoped>
+img {
+  cursor: pointer;
+}
 
 .carousel {
   width: 80%;
@@ -148,4 +174,20 @@ onUnmounted(() => {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   z-index: 2;
 }
+
+.titulo-promocion {
+  position: absolute;
+  top: 20px;
+  right: 50%;
+  transform: translateX(+50%);
+  background-color: rgba(255, 87, 34, 0.85); /* tono naranja con opacidad */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
 </style>
