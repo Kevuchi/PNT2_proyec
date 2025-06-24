@@ -72,6 +72,7 @@ function irAHome() {
 
 function hacerLogout() {
   usuarioStore.cerrarSesion()
+  carrito.vaciarCarrito()
   console.log(usuarioStore.getUser)
   router.push('/login')
 }

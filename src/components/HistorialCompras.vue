@@ -7,7 +7,7 @@
           <p><strong>Precio total:</strong> ${{ compra.precioFinal }}</p>
           <p><strong>Items:</strong></p>
           <ul>
-            <li v-for="items in JSON.parse(compra.productos)" :key="item.id">
+            <li v-for="item in JSON.parse(compra.items)" :key="item.id">
               {{ item.nombre }} (x{{ item.cantidad }}) - ${{ item.precioUnitario }}
             </li>
           </ul>
@@ -28,9 +28,12 @@
   const compras = ref([])
   
   onMounted(async () => {
-    if (!usuarioStore.getUser.id) return
-    const res = await axios.get('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/Compras')
-    compras.value = res.data.filter(c => c.idUsuario === usuarioStore.getUser.id)
+   // if (!usuarioStore.getUser.id) return
+    const res = await axios.get(`https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/Compras?idUsuario=${usuarioStore.getUser.id}`)
+    console.log(res.data)
+    console.log(usuarioStore.getUser.id)
+    compras.value = res.data
+    console.log(compras.value )
   })
   </script>
   
