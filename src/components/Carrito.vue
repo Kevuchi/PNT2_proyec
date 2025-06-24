@@ -14,7 +14,9 @@
   
         <h3>Total: ${{ carrito.total }}</h3>
   
-        <button @click="confirmarCompra">Confirmar compra</button>
+        <button @click="confirmarCompra"
+         :disabled="!usuario.estaLogueado()"
+        >Confirmar compra</button>
       </div>
     </div>
   </template>
@@ -22,12 +24,14 @@
   <script setup>
   import { useCarritoStore } from '../stores/carritoStore'
   import axios from 'axios'
-  
+  import { useUsuarioStore } from '../stores/usuarioStore'
+  const usuario = useUsuarioStore()
   const carrito = useCarritoStore()
   
   const confirmarCompra = async () => {
     try {
       const payload = {
+        idUsuario: usuario.$id,
         fecha: new Date().toISOString(),
         items: carrito.items.map(item => ({
           id: item.id,
@@ -38,7 +42,7 @@
         total: carrito.total,
       }
   
-      await axios.post('https://tuapi.com/compras', payload)
+      await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', payload)
   
       carrito.vaciarCarrito()
       alert('Compra realizada con éxito')
