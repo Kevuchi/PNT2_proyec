@@ -55,9 +55,9 @@ async function cargarImagenes() {
     const res = await fetch('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/productos');
     const data = await res.json();
 
-    // Extraer solo el campo "imagen los links filtrando los que tiene stock > 100"
+    // Extraer solo el campo "imagen los links filtrando los que tiene stock >= 100"
     imagenes.value = data
-    .filter(item => item.stock > 100)
+    .filter(item => item.stock >= 100)
     //.map(item => item.imagen);
   } catch (error) {
     console.error('Error al cargar imágenes:', error);

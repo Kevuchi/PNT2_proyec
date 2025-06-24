@@ -1,11 +1,19 @@
 <template>
-    <div>
-      <h2 class="text-xl font-bold mb-4">Mis compras</h2>
-      <div v-if="compras.length">
-        <div v-for="compra in compras" :key="compra.fecha" class="border p-4 rounded mb-2">
-          <p><strong>Fecha:</strong> {{ compra.fecha }}</p>
-          <p><strong>Precio total:</strong> ${{ compra.precioFinal }}</p>
-          <p><strong>Items:</strong></p>
+  <div class="compras-container">
+    <h2 class="titulo">📦 Mis compras realizadas</h2>
+
+    <div v-if="compras.length">
+      <div v-for="compra in compras" :key="compra.fecha" class="compra-tarjeta">
+        <div class="campo">
+          <label>Fecha:</label>
+          <input type="text" :value="compra.fecha" readonly />
+        </div>
+        <div class="campo">
+          <label>Total:</label>
+          <input type="text" :value="'$' + compra.total" readonly />
+        </div>
+        <div class="campo-items">
+          <label>Items comprados:</label>
           <ul>
             <li v-for="item in JSON.parse(compra.items)" :key="item.id">
               {{ item.nombre }} (x{{ item.cantidad }}) - ${{ item.precioUnitario }}
@@ -13,11 +21,13 @@
           </ul>
         </div>
       </div>
-      <div v-else>
-        <p>No tenés compras registradas.</p>
-      </div>
     </div>
-  </template>
+
+    <div v-else class="sin-compras">
+      <p>No tenés compras registradas.</p>
+    </div>
+  </div>
+</template>
   
   <script setup>
   import { ref, onMounted } from 'vue'
@@ -37,3 +47,61 @@
   })
   </script>
   
+  <style scoped>
+.compras-container {
+  width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff3e0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #d84315;
+  margin-bottom: 30px;
+}
+
+.compra-tarjeta {
+  background: #fbe9e7;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 5px solid #e64a19;
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+.campo label {
+  display: block;
+  font-weight: bold;
+  color: #bf360c;
+  margin-bottom: 5px;
+}
+
+.campo input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #444;
+}
+
+.campo-items ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  color: #5d4037;
+}
+
+.sin-compras {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  margin-top: 40px;
+}
+</style>
