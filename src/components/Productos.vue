@@ -45,7 +45,8 @@
             </p>
             
             <p class="precio" v-if="producto.precio">
-              <strong>Precio: $</strong> {{ producto.precio }}
+             
+              <strong>Precio: $</strong> {{producto.stock >= 100? producto.precio*0.5: producto.precio }}
             </p>
             
             <p class="descripcion">

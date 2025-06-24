@@ -11,8 +11,11 @@
           <p>{{ item.nombre }} x {{ item.cantidad }} — ${{ item.precioUnitario * item.cantidad }}</p>
           <button @click="carrito.quitarDelCarrito(item.id)">Eliminar</button>
         </div>
-  
-        <h3>Total: ${{ carrito.total }}</h3>
+        <h3>Total: </h3>
+        <p>Total de productos: {{ carrito.cantidadTotal }}</p>
+        <p>Total sin descuento: ${{ carrito.total }}</p>
+        <p>Total con descuento: ${{ carrito.totalConDescuento }}</p>
+        <p>Descuento aplicado: ${{ carrito.descuentoTotal }}</p>
   
         <button @click="confirmarCompra"
          :disabled="!usuario.getUser.id"

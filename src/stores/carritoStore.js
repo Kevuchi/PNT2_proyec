@@ -15,12 +15,27 @@ export const useCarritoStore = defineStore('carrito', {
     state: () => ({
         items: [],
         descuentoStockAlto: 0.5,
-        stockParaDescuento: 50
+        stockParaDescuento: 100
     }),
 
     getters: {
         total: (state) => {
             return state.items.reduce((acc, item) => acc + item.precioUnitario * item.cantidad, 0)
+        },
+        totalConDescuento: (state) => {
+            return state.items.reduce((acc, item) => {
+                const subtotal = item.precioUnitario * item.cantidad
+                const descuento = item.stock > state.stockParaDescuento ? subtotal * state.descuentoStockAlto : 0
+                return acc + (subtotal - descuento)
+            }, 0)
+        },
+
+        descuentoTotal: (state) => {
+            return state.items.reduce((acc, item) => {
+                const subtotal = item.precioUnitario * item.cantidad
+                const descuento = item.stock > state.stockParaDescuento ? subtotal * state.descuentoStockAlto : 0
+                return acc + descuento
+            }, 0)
         },
         cantidadTotal: (state) => {
             return state.items.reduce((acc, item) => acc + item.cantidad, 0)
@@ -38,6 +53,7 @@ export const useCarritoStore = defineStore('carrito', {
                     nombre: producto.nombre,
                     precioUnitario: producto.precio,
                     cantidad: 1,
+                    stock: producto.stock
                 })
             }
         },
