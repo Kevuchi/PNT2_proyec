@@ -42,7 +42,7 @@
             cantidad: item.cantidad,
         }))),
         fecha: new Date().toISOString(),
-        total: carrito.totalConDescuento,
+        total: carrito.totalConDescuento,//si no se aplica descuento pasa el precio completo
       }
       console.log("payloaaaad",payload)
       await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', payload,
