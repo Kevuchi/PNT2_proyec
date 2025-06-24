@@ -9,7 +9,7 @@
           <input type="text" :value="compra.fecha" readonly />
         </div>
         <div class="campo">
-          <label>Total descuento aplicado:</label>
+          <label>Total con descuento aplicado:</label>
           <input type="text" :value="'$' + compra.totalDescuento" readonly />
         </div>
         <div class="campo">

@@ -1,27 +1,33 @@
 <template>
-    <div class="carrito">
-      <h2>Carrito de compras</h2>
-  
-      <div v-if="carrito.items.length === 0">
-        <p>El carrito está vacío.</p>
-      </div>
-  
-      <div v-else>
-        <div v-for="item in carrito.items" :key="item.id" class="item-carrito">
-          <p>{{ item.nombre }} x {{ item.cantidad }} — ${{ item.precioUnitario * item.cantidad }}</p>
-          <button @click="carrito.quitarDelCarrito(item.id)">Eliminar</button>
-        </div>
-        <h3>Total: </h3>
-        <p>Total de productos: {{ carrito.cantidadTotal }}</p>
-        <p>Total sin descuento: ${{ carrito.total }}</p>
-        <p>Total con descuento: ${{ carrito.totalConDescuento }}</p>
-        <p>Descuento aplicado: ${{ carrito.descuentoTotal }}</p>
-  
-        <button @click="confirmarCompra"
-         :disabled="!usuario.getUser.id"
-        >Confirmar compra</button>
+<div class="carrito">
+  <div class="carrito-block">
+    <h2>🛒 Carrito de compras</h2>
+    <div v-if="carrito.items.length === 0">
+      <p>El carrito está vacío.</p>
+    </div>
+    <div v-else>
+      <div
+        v-for="item in carrito.items"
+        :key="item.id"
+        class="item-carrito"
+      >
+        <p>{{ item.nombre }} x {{ item.cantidad }} — ${{ item.precioUnitario * item.cantidad }}</p>
+        <button @click="carrito.quitarDelCarrito(item.id)">Eliminar</button>
       </div>
     </div>
+  </div>
+
+  <div class="total-block" v-if="carrito.items.length">
+    <h3>🧾 Resumen</h3>
+    <p>Total de productos: {{ carrito.cantidadTotal }}</p>
+    <p>Total sin descuento: ${{ carrito.total }}</p>
+    <p>Total con descuento: ${{ carrito.totalConDescuento }}</p>
+    <p>Descuento aplicado: ${{ carrito.descuentoTotal }}</p>
+    <button @click="confirmarCompra" :disabled="!usuario.getUser.id">
+      Confirmar compra
+    </button>
+  </div>
+</div>
   </template>
   
   <script setup>
@@ -85,5 +91,94 @@ function obtenerFechaFormateada() {
     align-items: center;
     margin-bottom: 0.5rem;
   }
+
+  /*estilo para carrito*/
+  .carrito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  padding: 30px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.item-carrito {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #fbe9e7;
+  border-radius: 8px;
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-carrito p {
+  margin: 0;
+  font-weight: 500;
+  color: #5d4037;
+}
+
+.item-carrito button {
+  background-color: #e57373;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.item-carrito button:hover {
+  background-color: #c62828;
+}
+
+.carrito-block {
+  flex: 1 1 60%;
+  min-width: 300px;
+}
+
+.total-block {
+  flex: 1 1 35%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.total-block h3 {
+  margin-top: 0;
+  color: #bf360c;
+}
+
+.total-block p {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #5d4037;
+}
+
+.total-block button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.total-block button:hover:not(:disabled) {
+  background-color: #e64a19;
+}
+
+.total-block button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
   </style>
   
