@@ -1,0 +1,64 @@
+<template>
+    <div class="carrito">
+      <h2>Carrito de compras</h2>
+  
+      <div v-if="carrito.items.length === 0">
+        <p>El carrito está vacío.</p>
+      </div>
+  
+      <div v-else>
+        <div v-for="item in carrito.items" :key="item.id" class="item-carrito">
+          <p>{{ item.nombre }} x {{ item.cantidad }} — ${{ item.precioUnitario * item.cantidad }}</p>
+          <button @click="carrito.quitarDelCarrito(item.id)">Eliminar</button>
+        </div>
+  
+        <h3>Total: ${{ carrito.total }}</h3>
+  
+        <button @click="confirmarCompra">Confirmar compra</button>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { useCarritoStore } from '../stores/carritoStore'
+  import axios from 'axios'
+  
+  const carrito = useCarritoStore()
+  
+  const confirmarCompra = async () => {
+    try {
+      const payload = {
+        fecha: new Date().toISOString(),
+        items: carrito.items.map(item => ({
+          id: item.id,
+          nombre: item.nombre,
+          precioUnitario: item.precio,
+          cantidad: item.cantidad,
+        })),
+        total: carrito.total,
+      }
+  
+      await axios.post('https://tuapi.com/compras', payload)
+  
+      carrito.vaciarCarrito()
+      alert('Compra realizada con éxito')
+    } catch (error) {
+      console.error('Error al confirmar compra:', error)
+      alert('Hubo un problema al realizar la compra')
+    }
+  }
+  </script>
+  
+  <style scoped>
+  .carrito {
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+  .item-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  </style>
+  

@@ -13,16 +13,18 @@ import RegistraTuComercio from './components/RegistraComercio.vue'
 import Login from './components/Login.vue'
 import Productos from './components/Productos.vue'
 import Registro from './components/Registro.vue'
+import Carrito from './components/Carrito.vue'
 
 const routes = [
-    
+
     { path: '/', component: Home },
     { path: '/promociones', component: Promociones },
-    {path: '/registra-comercio', component: RegistraTuComercio },
+    { path: '/registra-comercio', component: RegistraTuComercio },
     { path: '/productos', component: Productos },
     { path: '/login', component: Login },
-    { path: '/registro', component: Registro }
-    
+    { path: '/registro', component: Registro },
+    { path: '/carrito', component: Carrito }
+
 ]
 const router = createRouter({
     history: createWebHistory(),

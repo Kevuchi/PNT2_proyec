@@ -8,6 +8,7 @@
         <router-link to="/promociones">Promociones</router-link>
         <router-link to="/registra-comercio">Registra tu comercio</router-link>
         <router-link to="/productos">Productos</router-link>
+        <router-link to="/carrito">Carrito</router-link>
         
         <div class="usuario-dropdown" v-if="usuarioStore.estaLogueado">
           <span class="usuario-trigger">

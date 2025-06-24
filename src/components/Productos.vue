@@ -41,7 +41,7 @@
             </p>
             
             <p class="precio" v-if="producto.precio">
-              <strong>Precio:</strong> {{ producto.precio }}
+              <strong>Precio: $</strong> {{ producto.precio }}
             </p>
             
             <p class="descripcion">
@@ -64,11 +64,11 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-
+import { useCarritoStore } from '../stores/carritoStore'
 const productos = ref([]);
 const loading = ref(true);
 const selectedCategory = ref('');
-
+const carrito = useCarritoStore()
 // Load categories from API
 const loadCategories = async () => {
   try {
@@ -80,7 +80,9 @@ const loadCategories = async () => {
     return [];
   }
 };
-
+ function agregarCarrito (producto) {
+  carrito.agregarAlCarrito(producto)
+}
 // Categories state
 const categories = ref([]);
 
@@ -114,11 +116,11 @@ const handleImageError = (event) => {
 };
 
 // Add to cart function
-const agregarCarrito = (producto) => {
-  if (producto.precio) {
-    console.log('Agregando al carrito:', producto);
-  }
-};
+// const agregarCarrito = (producto) => {
+//   if (producto.precio) {
+//     console.log('Agregando al carrito:', producto);
+//   }
+// };
 </script>
 
 <style scoped>

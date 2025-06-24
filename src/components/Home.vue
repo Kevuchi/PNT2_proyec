@@ -1,7 +1,10 @@
 <template>
+  <!--
+  buscar elemento slide o carrusel + sumar botón carrito
+  --->
   <div class="carousel">
     <div class="carousel-image" v-if="imagenes.length">
-      <img :src="imagenes[indiceActual]" alt="Publicidad" />
+      <img :src="imagenes[indiceActual]" alt="Publicidad"/>
     </div>
 
     <div class="controles">
@@ -12,8 +15,8 @@
 
   <div class="texto-container">
     <p class="texto-estilizado">
-    ¿Qué es Lorem Ipsum?
-    Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
+    Adquiera los mejores productos de rotisería y bodegón.
+    Pizzas, empanadas, milanesas, postres y mucho más!
     </p>
   </div>
 
@@ -28,11 +31,12 @@ let intervalo = null;
 
 async function cargarImagenes() {
   try {
-    const res = await fetch('https://684dea7265ed087139176cc4.mockapi.io/api/v1/imagenes-publicidad');
+  
+    const res = await fetch('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/productos');
     const data = await res.json();
 
     // Extraer solo el campo "img-publi"
-    imagenes.value = data.map(item => item['img-publi']);
+    imagenes.value = data.map(item => item.imagen);
   } catch (error) {
     console.error('Error al cargar imágenes:', error);
   }
