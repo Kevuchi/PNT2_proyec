@@ -9,7 +9,7 @@
         <router-link to="/registra-comercio">Registra tu comercio</router-link>
         <router-link to="/productos">Productos</router-link>
         <router-link to="/carrito">Carrito</router-link>
-        
+        <router-link to="/historial">Historail de compras</router-link>
         <div class="usuario-dropdown" v-if="usuarioStore.estaLogueado">
           <span class="usuario-trigger">
             Bienvenido {{ usuarioStore.getUser.nombre }}

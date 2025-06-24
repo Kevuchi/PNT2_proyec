@@ -14,6 +14,7 @@ import Login from './components/Login.vue'
 import Productos from './components/Productos.vue'
 import Registro from './components/Registro.vue'
 import Carrito from './components/Carrito.vue'
+import HistorialCompras from './components/HistorialCompras.vue'
 
 const routes = [
 
@@ -23,7 +24,8 @@ const routes = [
     { path: '/productos', component: Productos },
     { path: '/login', component: Login },
     { path: '/registro', component: Registro },
-    { path: '/carrito', component: Carrito }
+    { path: '/carrito', component: Carrito },
+    { path: '/historial', component: HistorialCompras }
 
 ]
 const router = createRouter({
