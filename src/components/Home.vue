@@ -4,7 +4,13 @@
   --->
   <div class="carousel">
     <div class="carousel-image" v-if="imagenes.length">
+
       <img :src="imagenes[indiceActual]" alt="Publicidad"/>
+
+      <div class="texto-promocion">
+      ¡Promociones disponibles en los siguientes productos de hasta 50% descuento!
+      </div>
+
     </div>
 
     <div class="controles">
@@ -35,8 +41,10 @@ async function cargarImagenes() {
     const res = await fetch('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/productos');
     const data = await res.json();
 
-    // Extraer solo el campo "img-publi"
-    imagenes.value = data.map(item => item.imagen);
+    // Extraer solo el campo "imagen los links filtrando los que tiene stock >=100"
+    imagenes.value = data
+    .filter(item => item.stock > 100)
+    .map(item => item.imagen);
   } catch (error) {
     console.error('Error al cargar imágenes:', error);
   }
@@ -125,4 +133,19 @@ onUnmounted(() => {
   color: #333;
 }
 
+/*texto en carrousel */
+.texto-promocion {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 87, 34, 0.85); /* tono naranja con opacidad */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 2;
+}
 </style>
