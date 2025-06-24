@@ -15,7 +15,6 @@
         <h3>Total: ${{ carrito.total }}</h3>
   
         <button @click="confirmarCompra"
-         :disabled="!usuario.estaLogueado()"
         >Confirmar compra</button>
       </div>
     </div>
@@ -31,18 +30,22 @@
   const confirmarCompra = async () => {
     try {
       const payload = {
-        idUsuario: usuario.$id,
+        idUsuario: usuario.getUser.id,
+        items:JSON.stringify( carrito.items.map(item => ({
+            id: item.id,
+            nombre: item.nombre,
+            precioUnitario: item.precio,
+            cantidad: item.cantidad,
+        }))),
         fecha: new Date().toISOString(),
-        items: carrito.items.map(item => ({
-          id: item.id,
-          nombre: item.nombre,
-          precioUnitario: item.precio,
-          cantidad: item.cantidad,
-        })),
         total: carrito.total,
       }
-  
-      await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', payload)
+      console.log(payload)
+      await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', payload,
+      {headers: {
+        'Content-Type': 'application/json'
+    }}
+      )
   
       carrito.vaciarCarrito()
       alert('Compra realizada con éxito')
