@@ -23,13 +23,17 @@
           <h3>{{ producto.nombre || 'Sin nombre' }}</h3>
           
           <img 
-            :src="producto.imagen" 
-            :alt="producto.nombre || 'Producto'" 
-            class="producto-imagen"
-            @error="handleImageError"
+          :src="producto.imagen" 
+          :alt="producto.nombre || 'Producto'" 
+          class="producto-imagen"
+          @error="handleImageError"
           />
-          
-          <!-- Product not available overlay -->
+          <div
+           v-if="producto.stock >= 100"
+          class="ribbon"
+          >
+            50% OFF
+           </div>
           <div v-if="!producto.precio" class="no-disponible">
             Producto no disponible
           </div>
@@ -124,6 +128,19 @@ const handleImageError = (event) => {
 </script>
 
 <style scoped>
+.ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: crimson;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-bottom-right-radius: 8px;
+  z-index: 10;
+}
+
 .productos-container {
   max-width: 1200px;
   margin: 0 auto;

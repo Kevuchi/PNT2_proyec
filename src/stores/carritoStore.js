@@ -14,6 +14,8 @@ import { computed } from "vue";
 export const useCarritoStore = defineStore('carrito', {
     state: () => ({
         items: [],
+        descuentoStockAlto: 0.5,
+        stockParaDescuento: 50
     }),
 
     getters: {
@@ -34,7 +36,7 @@ export const useCarritoStore = defineStore('carrito', {
                 this.items.push({
                     id: producto.id,
                     nombre: producto.nombre,
-                    precioUnitario: Number(producto.precio) || 0,
+                    precioUnitario: producto.precio,
                     cantidad: 1,
                 })
             }
