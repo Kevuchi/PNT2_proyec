@@ -75,6 +75,7 @@
   
      
       alert('Compra realizada con éxito')
+      window.location.reload()
     } catch (error) {
       console.error('Error al confirmar compra:', error)
       alert('Hubo un problema al realizar la compra')
