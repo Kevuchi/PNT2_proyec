@@ -24,6 +24,9 @@
             </li>
           </ul>
         </div>
+        <button @click="repetirCompra(compra)">
+        Repetir compra
+        </button>
       </div>
     </div>
 
@@ -49,6 +52,34 @@
     compras.value = res.data
     console.log(compras.value )
   })
+  const repetirCompra = async (compra) => {
+    try {
+    //   const payload = {
+    //     idUsuario: usuario.getUser.id,
+    //     items:JSON.stringify( carrito.items.map(item => ({
+    //         id: item.id,
+    //         nombre: item.nombre,
+    //         precioUnitario: item.precioUnitario,
+    //         cantidad: item.cantidad,
+    //     }))),
+    //     fecha: obtenerFechaFormateada(),
+    //     total: carrito.total,//si no se aplica descuento pasa el precio completo
+    //     totalDescuento: carrito.totalConDescuento
+    //   }
+      console.log("payloaaaad",compra)
+      await axios.post('https://sheet2api.com/v1/T0ZA8YOQPyc1/pn2/compras', compra,
+      {headers: {
+        'Content-Type': 'application/json'
+    }}
+      )
+  
+     
+      alert('Compra realizada con éxito')
+    } catch (error) {
+      console.error('Error al confirmar compra:', error)
+      alert('Hubo un problema al realizar la compra')
+    }
+  }
 
   </script>
   
